@@ -112,7 +112,7 @@ const Home = () => {
                     <Cross1Icon/>
                 </Button>
                 
-            </div>
+            </div> 
 
 
             <div className="h-[76%] flex flex-col overflow-y-auto gap-5 px-5 py-2 scroll-container">

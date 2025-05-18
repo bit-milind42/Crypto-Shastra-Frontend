@@ -3,7 +3,8 @@ import { SheetClose } from "@/components/ui/sheet";
 import { ActivityLogIcon, BookmarkIcon, DashboardIcon, ExitIcon, HomeIcon, PersonIcon } from "@radix-ui/react-icons";
 import { CreditCardIcon, LandmarkIcon, WalletIcon } from "lucide-react";
 import path from "path";
-import React from "react";
+import React, { use } from "react";
+import { useNavigate } from "react-router-dom";
 
 const menu=[
     {name:"Home",path:"/",icon:<HomeIcon className="w-6 h-6"/>},
@@ -51,12 +52,15 @@ const menu=[
 ]
 
 const Sidebar = () => {
+    const navigate=useNavigate();
     return (
         <div className="mt-10 space-y-5">
             {menu.map((item, index) => (
                 <div key={index}>
                     <SheetClose className="w-full">           
-                    <Button variant="outline" className="flex items-center gap-5 w-full py-6">
+                    <Button variant="outline" className="flex items-center gap-5 w-full py-6"
+                    onClick={()=>navigate(item.path)}>
+                        
                         <span className="w-8">
                             {item.icon}
                         </span>
