@@ -14,12 +14,15 @@ import Watchlist from './pages/watchlist/Watchlist'
 import StockDetails from './pages/stock details/StockDetails'
 import Profile from './pages/profile/Profile'
 import SearchCoin from './pages/search/SearchCoin'
+import Auth from './pages/Auth/Auth'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
+    <Auth/>
+    {false && <div>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} /> 
@@ -35,7 +38,10 @@ function App() {
         <Route path="/search" element={<SearchCoin />} />
 
       </Routes>
-      {/* <Home/> */}
+
+    </div>}
+      
+      
     </>
   )
 }
