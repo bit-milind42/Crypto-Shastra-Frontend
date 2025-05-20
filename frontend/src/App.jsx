@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Navbar from './pages/navbar/Navbar'
 import Home from './pages/home/Home'
@@ -15,14 +15,24 @@ import StockDetails from './pages/stock details/StockDetails'
 import Profile from './pages/profile/Profile'
 import SearchCoin from './pages/search/SearchCoin'
 import Auth from './pages/Auth/Auth'
+import { useDispatch, useSelector } from 'react-redux'
+import { getUser } from './state/auth/Action'
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
+  const {auth} = useSelector(store=>store);
+  const dispatch=useDispatch();
+
+  console.log(" auth ---- ",auth)
+
+  useEffect(()=>{
+    dispatch(getUser(auth.jwt || localStorage.getItem("jwt")))
+  },[auth.jwt])
   return (
     <>
-    <Auth/>
-    {false && <div>
+    
+    {auth.user? <div>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} /> 
@@ -39,7 +49,7 @@ function App() {
 
       </Routes>
 
-    </div>}
+    </div>:<Auth/>}
       
       
     </>
