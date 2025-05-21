@@ -6,7 +6,7 @@ import { BookmarkFilledIcon } from "@radix-ui/react-icons";
 
 const Activity = () => {
     return (
-        <div className="p-5 lg:p-20" >
+        <div className="p-5 lg:p-10" >
             <h1 className="font-bold text-3xl text-left pb-5">Trading Activity</h1>
             <Table className="border">
                         <TableHeader>

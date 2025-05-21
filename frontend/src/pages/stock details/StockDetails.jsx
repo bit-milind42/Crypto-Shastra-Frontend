@@ -3,11 +3,23 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { BookmarkFilledIcon } from "@radix-ui/react-icons";
 import { BookmarkIcon, DotIcon } from "lucide-react";
-import React from "react";
+import React, { use, useEffect } from "react";
 import TradingForm from "./TradingForm";
 import StockChart from "../home/StockChart";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { fetchCoinDetails, getCoinList } from "@/state/coin/Action";
 
 const StockDetails = () => {
+    const {coin}=useSelector(store=>store);
+
+    const dispatch = useDispatch();
+    const {id}=useParams();
+    useEffect(() => {
+        console.log(coin.coinDetails);
+        dispatch(fetchCoinDetails(id, localStorage.getItem("jwt")));    
+    }, [id]);
+
     return (
         <div className="p-5 mt-5">
             <div className="flex justify-between">
@@ -16,30 +28,32 @@ const StockDetails = () => {
                     <div>
                         <Avatar>
                             <AvatarImage
-                            src="https://cdn.pixabay.com/photo/2021/05/26/19/32/ethereum-6286124_1280.jpg"
+                            src={
+                                coin.coinDetails?.image.large
+                            }
                             />
                         </Avatar>
                     </div>
                     <div>
                         <div className="flex items-center gap-2">
                             <p>
-                                BTC
+                                {coin.coinDetails?.symbol.toUpperCase()}
                             </p>
                             <DotIcon className="text-gray-500"/>
                             <p className="text-gray-500">
-                                Bitcoin
+                                {coin.coinDetails?.name}
                                 </p>
 
                         </div>
                         <div className="flex items-end gap-2">
                             <p className="text-2xl font-bold">
-                                $69,000.00
+                                ${coin.coinDetails?.market_data.current_price.usd}
                             </p>
 
                             <p className="text-red-600">
                                 
-                                    <span>-0.20009</span>
-                                    <span className="">(0.20%)</span>
+                                    <span>-{coin.coinDetails?.market_data.market_cap_change_24h}</span>
+                                    <span className="">(-{coin.coinDetails?.market_data.market_cap_change_percentage_24h}%)</span>
 
                             </p>
 
@@ -74,7 +88,7 @@ const StockDetails = () => {
                 
             </div>
             <div className="mt-14">
-                <StockChart/>
+                <StockChart coinId={id} />
             </div>
             
 

@@ -18,10 +18,11 @@ const SigninForm = () => {
             password:""
         }
     })
-    const onSubmit=(data)=>{
-        dispatch(login(data,navigate))
-        console.log(data)
-    }
+    const onSubmit = (data) => {
+    dispatch(login({...data, navigate}));
+    console.log(data);
+}
+
     return(
         <div className="px-10 py-2">
             <h1 className="text-xl font-bold mb-4 text-white">Login</h1>
@@ -53,7 +54,7 @@ const SigninForm = () => {
                             <FormControl>
                                 <Input
                                 // name="ifscCode"
-                                 className="border w-full border-gray-300 p-5"
+                                 className="border w-full border-gray-300 p-5 text-white"
                                  placeholder="Email id" {...field} />
                             </FormControl>
                             <FormMessage />
@@ -69,7 +70,7 @@ const SigninForm = () => {
                             <FormControl>
                                 <Input
                                 // name="accountNumber"
-                                 className="border w-full border-gray-300 p-5"
+                                 className="border w-full border-gray-300 p-5 text-white"
                                  placeholder="Password" {...field} />
                             </FormControl>
                             <FormMessage />

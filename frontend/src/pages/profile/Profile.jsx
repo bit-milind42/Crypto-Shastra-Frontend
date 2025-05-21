@@ -5,8 +5,10 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { VerifiedIcon } from "lucide-react";
 import React from "react";
 import AccountVerificationForm from "./AccountVerificationForm";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
+    const {auth} = useSelector(store=>store);
 
     const handleEnableTwoStepVerification = () => {
         console.log("Two Step Verification");
@@ -24,17 +26,17 @@ const Profile = () => {
                         <div className="lg:flex gap-32">
                             <div className="space-y-7">
                                 <div className="flex">
-                                    <p className="w-[9rem]">Email</p>
-                                    <p className="text-gray-500">Milind@gmail.com</p>
+                                    <p className="w-[9rem]">Email : </p>
+                                    <p className="text-gray-500">{auth.user?.email}</p>
                                 </div>
 
-                                <div className="flex">
+                                {/* <div className="flex">
                                     <p className="w-[9rem]">Email : </p>
                                     <p className="text-gray-500">Milind@gmail.com</p>
-                                </div>
+                                </div> */}
                                 <div className="flex">
                                     <p className="w-[9rem]">Full Name : </p>
-                                    <p className="text-gray-500">Lord Milind</p>
+                                    <p className="text-gray-500">{auth.user?.fullName}</p>
                                 </div>
                                 <div className="flex">
                                     <p className="w-[9rem]">Date of Birth : </p>

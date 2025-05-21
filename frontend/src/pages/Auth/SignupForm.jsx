@@ -1,94 +1,99 @@
 import { Button } from "@/components/ui/button";
-import { DialogClose } from "@/components/ui/dialog";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { register } from "@/state/auth/Action";
-import React from "react";  
+import React from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
 
+// Zod schema
+const formSchema = z.object({
+  fullName: z.string().min(1, "Full name is required"),
+  email: z.string().email("Invalid email"),
+  password: z.string().min(6, "Password must be at least 6 characters")
+});
+
 const SignupForm = () => {
+  const dispatch = useDispatch();
 
-    const dispatch=useDispatch();
-
-    const form=useForm({
-        resolver:"",
-        defaultValues:{
-            fullname:"",
-            email:"",
-            password:""
-        }
-    })
-    const onSubmit=(data)=>{
-        dispatch(register(data))
-        console.log(data)
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      password: ""
     }
-    return(
-        <div className="px-10 py-2">
-            <h1 className="text-xl font-bold mb-4">Create New Account </h1>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+  });
 
-                    <FormField
-                        control={form.control}
-                        name="fullname"
-                        render={({ field }) => (
-                            <FormItem>
-                            
-                            <FormControl>
-                                <Input
-                                 className="border w-full border-gray-300 p-5"
-                                 placeholder="Enter Your Full name" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                     <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                           
-                            <FormControl>
-                                <Input
-                                // name="ifscCode"
-                                 className="border w-full border-gray-300 p-5"
-                                 placeholder="Enter Your Email id" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                     <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                            <FormItem>
-                            
-                            <FormControl>
-                                <Input
-                                // name="accountNumber"
-                                 className="border w-full border-gray-300 p-5"
-                                 placeholder="Enter Your Password" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                     
+  const onSubmit = (data) => {
+    dispatch(register(data));
+    console.log(data);
+  };
 
-                    
-                
-                        <Button variant="secondary" type="submit" className="w-full py-5 text-lg">
-                            Submit
-                        </Button>
-                    
+  return (
+    <div className="px-10 py-2">
+      <h1 className="text-xl font-bold mb-4">Create New Account</h1>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    className="border w-full border-gray-300 p-5"
+                    placeholder="Enter Your Full name"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    className="border w-full border-gray-300 p-5"
+                    placeholder="Enter Your Email id"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    type="password"
+                    className="border w-full border-gray-300 p-5"
+                    placeholder="Enter Your Password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-                </form>
+          <Button variant="secondary" type="submit" className="w-full py-5 text-lg">
+            Submit
+          </Button>
+        </form>
+      </Form>
+    </div>
+  );
+};
 
-            </Form>
-        </div>
-    )
-}
-export default SignupForm ;
+export default SignupForm;

@@ -5,7 +5,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 const Portfolio = () => {
     return (
-        <div className="p-5 lg:p-20" >
+        <div className="p-5 lg:p-10" >
             <h1 className="font-bold text-3xl text-left pb-5">Portfolio</h1>
             <Table>
             <TableHeader>

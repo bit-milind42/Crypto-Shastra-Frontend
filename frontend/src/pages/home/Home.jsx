@@ -1,17 +1,21 @@
 import { Button } from "@/components/ui/button";
-import React from "react";
+import React, { useEffect } from "react";
 import AssetTable from "./AssetTable";
 import StockChart from "./StockChart";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Cross1Icon, DotIcon } from "@radix-ui/react-icons";
 import { MessageCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
-
+import { getCoinList, getTop50CoinList } from "@/state/coin/Action";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 const Home = () => {
 
     const [category, setCategory] = React.useState("all");
     const [inputValue, setInputValue] = React.useState("");
     const [isBotReleased, setIsBotReleased] = React.useState(false);
+    const {coin} = useSelector(store=>store);
+    const dispatch = useDispatch();
 
     const handleBotRelease = () => setIsBotReleased(!isBotReleased);
 
@@ -28,6 +32,15 @@ const Home = () => {
         }
         setInputValue("")
     }
+
+    useEffect( () => {
+        dispatch(getTop50CoinList());
+    },[category]);
+
+    
+    useEffect(() => {
+        dispatch(getCoinList(1));
+    },[]);
 
 
 
@@ -68,10 +81,12 @@ const Home = () => {
                 </Button>
 
             </div>
-            <AssetTable/>
+            <AssetTable coin={category=="all"?coin.coinList:coin.top50} category={category} />
           </div>
         <div className="hidden lg:block lg:w-[50%] p-5">
-            <StockChart/>
+            <StockChart coinId={"bitcoin"}/>
+
+
             <div className="flex gap-5 items-center">
                 <div>
                     <Avatar>
