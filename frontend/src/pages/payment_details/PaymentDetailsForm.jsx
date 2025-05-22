@@ -2,10 +2,14 @@ import { Button } from "@/components/ui/button";
 import { DialogClose } from "@/components/ui/dialog";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { addPaymentDetails } from "@/state/withdrawal/Action";
 import React from "react";  
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import PaymentDetails from "./PaymentDetails";
 
 const PaymentDetailsForm = () => {
+    const dispatch = useDispatch();
     const form=useForm({
         resolver:"",
         defaultValues:{
@@ -16,7 +20,11 @@ const PaymentDetailsForm = () => {
         }
     })
     const onSubmit=(data)=>{
-        console.log(data)
+        dispatch(addPaymentDetails({
+            PaymentDetails:data,
+            jwt:localStorage.getItem("jwt")
+        }))
+        console.log(data)   
     }
     return(
         <div className="px-10 py-2">
